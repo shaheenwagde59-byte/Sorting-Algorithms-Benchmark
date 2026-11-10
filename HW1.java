@@ -1,4 +1,3 @@
-
 package com.mycompany.h.w1;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,10 +7,9 @@ import java.util.function.Consumer;
 
 public class HW1 {
 
- static final int N = 100000; 
+    static final int N = 100000; 
 
     // 1 Selection Sort
- 
     public static void selectionSort(int[] arr) {
         int n = arr.length;
         for (int i = 0; i < n - 1; i++) {
@@ -27,7 +25,7 @@ public class HW1 {
         }
     }
 
-    //  2 Insertion Sort
+    // 2 Insertion Sort
     public static void insertionSort(int[] arr) {
         int n = arr.length;
         for (int i = 1; i < n; i++) {
@@ -41,7 +39,7 @@ public class HW1 {
         }
     }
 
-    //3 Bubble Sort 
+    // 3 Bubble Sort 
     public static void bubbleSort(int[] arr) {
         int n = arr.length;
         for (int i = 0; i < n - 1; i++) {
@@ -58,7 +56,7 @@ public class HW1 {
         }
     }
 
-    //  4 Merge Sort 
+    // 4 Merge Sort 
     private static void merge(int[] arr, int left, int mid, int right) {
         int n1 = mid - left + 1;
         int n2 = right - mid;
@@ -89,7 +87,7 @@ public class HW1 {
         }
     }
 
-    //  5 Quick Sort 
+    // 5 quick Sort 
     private static int partition(int[] arr, int low, int high) {
         int pivot = arr[high];
         int i = low - 1;
@@ -115,9 +113,7 @@ public class HW1 {
         }
     }
 
-
-
-//غير مرتبه
+    // غير مرتبه
     static int[] createRandom(Random rnd) {
         int[] a = new int[N];
         for (int i = 0; i < N; i++) a[i] = rnd.nextInt(1_000_000);
@@ -157,15 +153,14 @@ public class HW1 {
         return a;
     }
 
-
-
     static long measure(int[] original, Consumer<int[]> sorter) {
         int[] copy = Arrays.copyOf(original, original.length); 
         long start = System.nanoTime();
-        sorter.accept(copy);                                   
+        sorter.accept(copy);                         
         long end = System.nanoTime();
-        return (end - start) / 1000;                      
+        return (end - start) / 1000;                     
     }
+
     static void run() {
         Random rnd = new Random(42); 
 
@@ -179,7 +174,6 @@ public class HW1 {
 
         String[] names = {"Selection Sort", "Insertion Sort", "Bubble Sort", "Merge Sort", "Quick Sort"};
         
-
         List<Consumer<int[]>> sorters = new ArrayList<>();
         sorters.add(arr -> selectionSort(arr));
         sorters.add(arr -> insertionSort(arr));
@@ -188,7 +182,6 @@ public class HW1 {
         sorters.add(arr -> quickSort(arr, 0, arr.length - 1));
 
         System.out.println("Array size N = " + N + " (time in microseconds)\n");
-
        
         for (int i = 0; i < names.length; i++) {
             long randomTime = measure(data[0], sorters.get(i));
@@ -197,18 +190,15 @@ public class HW1 {
             long sortedTime   = measure(data[3], sorters.get(i));
 
             System.out.println("Algorithm: " + names[i]);
-            System.out.println("  - Random:           " + randomTime + " us");
-            System.out.println("  - Reversed:         " + reversedTime + " us");
-            System.out.println("  - Partially Sorted: " + partialTime + " us");
-            System.out.println("  - Fully Sorted:     " + sortedTime + " us");
+            System.out.println("  - Random:            " + randomTime + " us");
+            System.out.println("  - Reversed:          " + reversedTime + " us");
+            System.out.println("  - Partially Sorted:  " + partialTime + " us");
+            System.out.println("  - Fully Sorted:      " + sortedTime + " us");
             System.out.println("----------------------------------------");
         }
     }
 
-
     public static void main(String[] args) {
-        Thread t = new Thread(null, HW1::run, "sorting-thread", 512L * 1024 * 1024);
-        t.start();
+        run();
     }
 }
-
